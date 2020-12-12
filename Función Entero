@@ -1,0 +1,53 @@
+#include <iostream>
+
+using namespace std;
+
+
+bool numero(string p);
+
+
+int main(){}
+
+bool numero(string cadena){
+	enum TEstado {q0,q1};
+	
+	TEstado Estado;
+	
+	string Cadena;
+	int Simbolo;
+	bool EsNumero;
+	
+	int i;
+	int longitud;
+	
+	i = longitud = 0;
+	Estado = q0;
+	EsNumero = false;
+	
+	longitud = Cadena.size();
+	
+	while (longitud > i){
+		Simbolo  = Cadena[i];
+		EsNumero = (Simbolo >= '0' && Simbolo <= '9');
+		
+		if (Estado==q0){
+			if(EsNumero){
+				Estado = q1;
+			}
+		}
+		if (Estado==q1){
+			if(EsNumero){
+				Estado = q1;
+			}
+		}
+		if (!EsNumero){
+			Estado = q0;
+			break;
+		}
+		i++;
+	}
+	if (Estado==q1)
+		return true;
+	else
+		return false;
+}
