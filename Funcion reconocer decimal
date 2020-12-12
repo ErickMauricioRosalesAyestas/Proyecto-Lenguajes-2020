@@ -1,0 +1,70 @@
+
+#include <iostream>
+
+using namespace std;
+
+int main(){
+}
+
+bool decimal(string p);
+
+bool decimales(string cadena) {
+	
+	enum TEstado {q0,q1,q2,q3,q4};
+	TEstado Estado;
+	
+	int i=0;
+	int tamanio;
+	int simbolo;
+   
+   tamanio = cadena.size();
+   Estado = q0;
+   
+   while (tamanio > i){
+   		simbolo = cadena[i];
+   		
+   		switch (Estado){
+   		case q0:
+   			if (simbolo == '-' || simbolo == '+' || simbolo ){
+   				Estado = q1;
+			}
+			break;
+		case q1:
+			if (simbolo >= '0' && simbolo <= '9'){
+				Estado = q2;
+			}
+			break;
+		case q2:
+			if (simbolo >= '0' && simbolo <= '9'){
+				Estado = q2;
+			}
+			else{
+				if (simbolo == '.'){
+					Estado = q3;
+				}
+			}
+			break;
+		case q3:
+			if (simbolo >= '0' && simbolo <= '9'){
+				Estado = q4;
+			}
+			break;
+		case q4:
+			if (simbolo >= '0' && simbolo <= '9'){
+				Estado = q4;
+			}
+			break;
+		}
+		if (!(simbolo >= '0' && simbolo <= '9') &&
+			!(simbolo == '-' || simbolo == '+') &&
+			!(simbolo == '.')){
+				break;
+		}
+		i++;
+   	}
+   	if (Estado == q4)
+   		return true;
+	else
+		return false;
+   
+}
