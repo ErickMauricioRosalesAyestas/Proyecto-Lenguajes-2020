@@ -1,0 +1,72 @@
+#include <iostream>
+#include <stdlib.h>
+#include <string.h>
+#include <fstream>
+
+using namespace std;
+
+//Declaramos las variables de tipo string a utilizar
+string TablaSimbolos[21] = {"mientras","si","sino","para","definir","encender","Apagar"};
+string Temporal[200];
+string comando;
+
+//almacenaremos los caracteres en este arreglo para tokenizar
+char cadena[200];
+
+//Declaramos las variables de tipo entero a utilizar
+int contador;
+int TamanioTemporal=0;
+
+//funciones o metodos que utilizaremos
+bool EncontrarComandos();
+
+
+int main(){
+	EncontrarComandos();
+	
+	return 0;
+	
+	//for (l = 0; l<TamanioTemporal; l++){
+	//	cout<<Temporal[l]<<endl;
+	//}
+}
+//Funcion para leer los comandos del usuario y verifica si el comando existe en la tabla de simbolos
+bool EncontrarComandos(){
+	string palabra;
+	
+	//almacenamos la primer palabra dentro de las variables temporales
+	palabra = Temporal[contador];
+	
+	//ciclo para recorrer el arreglo con las palabras obtenidas con los tokens
+	while (contador!=TamanioTemporal){
+		//analisar cada palabra y comparar si coincide con la informacion de la tabla de simbolos para llamar su funcion respectiva
+		if (Temporal[contador] == "si"){
+			if (si()){
+				return true;
+			}else{
+				return false;
+			}
+		}else if(Temporal[contador] == "sino"){
+			if (sino()){
+				return true;
+			}else{
+				return false;
+			}
+		
+		}else{
+			//Revisar si las instrucciones son diferentes a la informacion de la tabla de simbolos
+			while(palabra !="para"&&palabra !="si"&&palabra !="mientras"&&palabra !="definir"){
+		    	contador++;
+		    	palabra=Temporal[contador];
+		    	cout<<"Revisar la declaracion de las instrucciones "<<Temporal[contador]<<endl;
+			}
+			contador--;
+		
+			return false;
+		}
+		
+	
+	contador++;
+	}
+
+}
