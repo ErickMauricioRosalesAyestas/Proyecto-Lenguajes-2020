@@ -1,0 +1,135 @@
+#include <iostream>
+#include <stdlib.h>
+#include <string.h>
+#include <fstream>
+
+using namespace std;
+
+//Declaramos las variables de tipo string a utilizar
+string TablaSimbolos[21] = {"mientras","si","sino","para","definir","encender","Apagar"};
+string Temporal[200];
+
+//Declaramos las variables de tipo entero a utilizar
+int contador;
+
+bool si();
+bool palabra(string p);
+
+int main(){
+	
+	
+	
+}
+
+//funcion si, para verificar que la instruccion fue ingresada de forma correcta
+bool si(){
+	contador++;
+	//Analisamos si el caracter despues del si, sea un parentesis abierto
+	if (Temporal[contador] == "("){
+		contador++;
+		//Revisamos que luego del parentesis lo que se ingresa sea un caracter o cadena
+		if (palabra(Temporal[contador])){
+			contador++;
+			//Analisamos que luego del caracter o cadena, sea un signo matematico valido
+			if (Temporal[contador]=="==" || Temporal[contador] == "!=" || Temporal[contador] == "<" || Temporal[contador] == ">"){
+				contador++;
+				//revisamos que lo siguiente sea un numero
+				if (numero(Temporal[contador])){
+					contador++;
+					//Ahora revisamos si el siguiente caracter sea un parentesis, para cerrar el si
+					if (Temporal[contador]==")"){
+						contador++;
+						//confirmamos que se abran los corchetes de la instruccion si
+						if (Temporal[contador]=="{"){
+							contador++;
+							//confirmamos que se cierren los corchetes para darle fin a la instruccion
+							if (Temporal[contador]=="}"){
+								cout<<"Instruccion si, aceptada como valida"<<endl;
+								contador++;
+								//hacemos la recursividad para que se analizen las siguientes instrucciones
+								if (Temporal[contador] == "si" || Temporal[contador] == "sino"){
+									EncontrarComandos();
+									return true;
+								}else{
+									return false;
+								}
+							//todos los else, imprimen un mensaje de que las instrucciones no escribieron de la manera correcta
+							}else{
+								cout<<"Error de sintaxis en la instruccion si, no se reconocio como valido"<<endl;
+								contador++;
+								return false;
+							}
+						}else{
+							cout<<"Error de sintaxis en la instruccion si, no se reconocio como valido"<<endl;
+							contador++;
+							return false;
+						}
+					}
+				}else{
+					cout<<"Error de sintaxis en la instruccion si, no se reconocio como valido"<<endl;
+					contador++;
+					return false;
+				}
+			}else{
+				cout<<"Error de sintaxis en la instruccion si, no se reconocio como valido"<<endl;
+				contador++;
+				return false;
+			}
+			
+		}else{
+			cout<<"Error de sintaxis en la instruccion si, no se reconocio como valido"<<endl;
+			contador++;
+			return false;
+		}
+	}else{
+		cout<<"Error de sintaxis en la instruccion si, no se reconocio como valido"<<endl;
+		contador++;
+		return false;
+	}
+	//NOTA: recordar que al final de cada if y else, aumentamos el contador para ir recorriendo el arreglo
+}
+
+//funcion para reconocer si es una palabra o cadena lo ingresado
+bool palabra(string cadena){
+	cout<<cadena<<endl;
+	enum TEstado{q0,q1,qe};
+	
+	TEstado Estado;
+	
+	int Simbolo;
+	
+	int i;
+	int longitud;
+	
+	i = longitud = 0;
+	
+	
+	longitud = cadena.size();
+	
+	while (longitud > i and Estado != qe){
+		Simbolo = cadena[i];
+		
+		switch (Estado){
+			case q0:
+				if (Simbolo >= 'a' && Simbolo <= 'z'){
+					Estado = q1;
+				}
+				break;
+			case q1:
+				if (Simbolo >= 'a' && Simbolo <= 'z'){
+					Estado = q1;
+				}
+				else{
+					Estado = qe;
+				}
+				break;
+		}
+		i++;
+	}
+	if (Estado == q1){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
