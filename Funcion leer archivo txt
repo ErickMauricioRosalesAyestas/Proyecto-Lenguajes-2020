@@ -5,15 +5,15 @@
 #include<fstream>
 using namespace std;
 
-void lectura();
+void leerArchivo();
 
 int main(){
 
-     lectura();
+     leerArchivo();
      
 }
 
-void lectura(){
+void leerArchivo(){
 	ifstream archivo;
 	string nombreArchivo,texto;
 
