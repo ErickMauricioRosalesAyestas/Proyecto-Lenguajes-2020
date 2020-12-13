@@ -9,6 +9,8 @@ void lectura();
 
 int main(){
 
+     lectura();
+     
 }
 
 void lectura(){
