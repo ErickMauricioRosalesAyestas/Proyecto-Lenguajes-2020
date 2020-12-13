@@ -1,0 +1,74 @@
+#include <iostream>
+#include <stdlib.h>
+#include <string.h>
+#include <fstream>
+
+using namespace std;
+
+//Declaramos las variables de tipo string a utilizar
+string TablaSimbolos[21] = {"mientras","si","sino","para","definir","encender","Apagar"};
+string Temporal[200];
+string comando;
+
+//almacenaremos los caracteres en este arreglo para tokenizar
+char cadena[200];
+
+//Declaramos las variables de tipo entero a utilizar
+int contador;
+int TamanioTemporal=0;
+
+//funciones o metodos que utilizaremos
+bool EncontrarComandos();
+bool si();
+bool sino();
+bool palabra(string p);
+bool numero(string p);
+
+void tokens();
+void leerArchivo();
+
+
+int main(){
+	int l=0;
+	
+	leerArchivo();
+	tokens();
+	EncontrarComandos();
+	
+	return 0;
+	
+	//for (l = 0; l<TamanioTemporal; l++){
+	//	cout<<Temporal[l]<<endl;
+	//}
+}
+
+
+//generar tokens de las cadenas del archivo de texto, para analizar las palabras
+void tokens(){
+	char *token;
+	int n = 0;
+	//Sacamos la primer palabra de la cadena leida del archivo de texto
+	token = strtok(cadena, " ,;");
+	
+	//Sacamos el tamaño de nuestra tabla de simbolos para recorrer y comparar las palabras
+	int TamanioArreglo = sizeof TablaSimbolos/sizeof TablaSimbolos[0];
+	
+	
+	while(token){
+		comando = token;
+		
+		for (TamanioTemporal = 0; TamanioTemporal<TamanioArreglo; TamanioTemporal++){
+			//comparamos si el comando existe en  nuestra tabla de simbolos
+			if (comando.compare(TablaSimbolos[TamanioTemporal])==0){
+				cout<<"Comando reconocido: "<<comando<<endl;
+				break;
+			}
+		}
+		//Pasamos a la siguiente palabra, para analizar
+		token = strtok(NULL," ,;");
+		//Almacenamos las palabras encontradas en un arreglo, para luego trabajar con el arreglo en los comandos y sus fuciones
+		Temporal[n] = comando;
+		n++;
+	}
+	TamanioTemporal = n;
+}
