@@ -34,14 +34,16 @@ bool numero(string p);
 
 void EncontrarComandos();
 void tokens();
-void leerArchivo();
+void leerArchivo(char *txt);
 void ResumenComandos();
 
 
-int main(){
+int main(int argc, char* argv[]){
 	int l=0;
+	//leyendo el archivo de texto que indica el usuario desde consola
+	char *txt = argv[1];
+	leerArchivo(txt);
 	
-	leerArchivo();
 	tokens();
 	cout<<"\n\t++ Resumen de sintaxis de instrucciones ++ \n"<<endl;
 	EncontrarComandos();
@@ -85,7 +87,7 @@ void tokens(){
 	TamanioTemporal = n;
 }
 //Leemos el archivo txt, para analizarlo
-void leerArchivo(){
+void leerArchivo(char *txt){
 	int j=0;
 	int i=0;
 	
@@ -93,7 +95,7 @@ void leerArchivo(){
 	string nombreArchivo,texto;
 	
 	//abrimos el archivo de texto, almacenamos su informacion
-	archivo.open("texto.txt",ios::in); 
+	archivo.open(txt,ios::in); 
 	
 	//If por surge un error al momento de abrir el archivo txt
 	if(archivo.fail()){
