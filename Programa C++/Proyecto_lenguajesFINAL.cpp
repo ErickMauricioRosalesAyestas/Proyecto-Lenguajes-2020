@@ -16,7 +16,7 @@ char cadena[200];
 
 //Declaramos las variables de tipo entero a utilizar
 int contador;
-int ContadorVariables=0;
+int ContadorVariables;
 int TamanioTemporal=0;
 int ContadorComandos[7] = {0, 0, 0, 0, 0, 0, 0};
 
@@ -39,20 +39,15 @@ void ResumenComandos();
 
 
 int main(){
-	int l=0;
-	
+
 	leerArchivo();
 	tokens();
 	cout<<"\n\t++ Resumen de sintaxis de instrucciones ++ \n"<<endl;
 	EncontrarComandos();
 	ResumenComandos();
-
 	
 	return 0;
-	
-	//for (l = 0; l<TamanioTemporal; l++){
-	//	cout<<Temporal[l]<<endl;
-	//}
+
 }
 
 //generar tokens de las cadenas del archivo de texto, para analizar las palabras
@@ -62,7 +57,7 @@ void tokens(){
 	//Sacamos la primer palabra de la cadena leida del archivo de texto
 	token = strtok(cadena, " ,;");
 	
-	//Sacamos el tamaño de nuestra tabla de simbolos para recorrer y comparar las palabras
+	//Sacamos el tamaÃ±o de nuestra tabla de simbolos para recorrer y comparar las palabras
 	int TamanioArreglo = sizeof TablaSimbolos/sizeof TablaSimbolos[0];
 	
 	
@@ -558,50 +553,78 @@ bool definir(){
 }
 
 bool encender(){
+	int centinela = 0;
+	int i = 0;
 	contador++;
 	if (cadenas(Temporal[contador])){
-		contador++;
-		if (numero(Temporal[contador])){
-			cout<<"--Instruccion encender aceptada, encendiendo durante "<<Temporal[contador]<<" sg"<<endl;
-			contador++;
-			if (Temporal[contador] == "si" || Temporal[contador] == "sino" || Temporal[contador] == "mientras" || Temporal[contador] == "definir" || Temporal[contador] == "encender" || Temporal[contador] == "apagar"){
-				EncontrarComandos();
-				return true;
+		string variable = Temporal[contador];
+		int TamanioArreglo = sizeof Variables / sizeof Variables[0];
+		for (i = 0; i<TamanioArreglo; i++){
+			//comparamos si el comando existe en  nuestra tabla de simbolos
+			if (variable.compare(Variables[i])==0){
+				if (cadenas(Temporal[contador])){
+					cout<<"--Instruccion encender aceptada, encendiendo durante "<<Temporal[contador + 1]<<" sg"<<endl;
+					contador++;
+					if (Temporal[contador] == "si" || Temporal[contador] == "sino" || Temporal[contador] == "mientras" || Temporal[contador] == "definir" || Temporal[contador] == "encender" || Temporal[contador] == "apagar"){
+						EncontrarComandos();
+						return true;
+					}else{
+						return false;
+					}
+				}else{
+					cout<<"--Error de sintaxis en la instruccion encender, no se reconocio como valido"<<endl;
+					contador++;
+					return false;
+				}
 			}else{
-				return false;
+				cout<<"";
 			}
-		}else{
-			cout<<"--Error de sintaxis en la instruccion si, no se reconocio como valido"<<endl;
-			contador++;
-			return false;
 		}
+		if (centinela == 0){
+			cout<<"--Comando encender no aceptado, no existe la variable "<<Temporal[contador]<< " en memoria"<<endl;
+		}
+		contador++;
+		
 	}else{
 		cout<<"--Error de sintaxis en la instruccion si, no se reconocio como valido"<<endl;
 		contador++;
 		return false;
 	}
-	/*
-	contador++;
-	int i = ;
-	
-	variable = Temporal[contador];
-	int TamanioArreglo = sizeof Variables / sizeof Variables[0];
-	for (i = 0; i<TamanioArreglo; i++){
-		//comparamos si el comando existe en  nuestra tabla de simbolos
-		if (variable.compare(Variables[i])==0){
-			cout<<"Variable reconocida encendiendo"
-		}else{
-			return false;
-		}
-	}
-	*/
 }
 
 bool apagar(){
+	int centinela = 0;
+	int i=0;
 	contador++;
 	if (cadenas(Temporal[contador])){
-		cout<<"Comando apagar aceptado, apagando "<<Temporal[contador]<<endl;
-		contador++;		
+		string variable = Temporal[contador];
+		int TamanioArreglo = sizeof Variables / sizeof Variables[0];
+		for (i = 0; i<TamanioArreglo; i++){
+			//comparamos si el comando existe en  nuestra tabla de simbolos
+			if (variable.compare(Variables[i])==0){
+				if (cadenas(Temporal[contador])){
+					centinela = 1;
+					cout<<"--Instruccion apagar aceptada, apagando "<<Temporal[contador]<<endl;
+					contador++;
+					if (Temporal[contador] == "si" || Temporal[contador] == "sino" || Temporal[contador] == "mientras" || Temporal[contador] == "definir" || Temporal[contador] == "encender" || Temporal[contador] == "apagar"){
+						EncontrarComandos();
+						return true;
+					}else{
+						return false;
+					}
+				}else{
+					cout<<"--Error de sintaxis en la instruccion encender, no se reconocio como valido"<<endl;
+					contador++;
+					return false;
+				}
+			}else{
+				cout<<"";
+			}
+		}
+		if (centinela == 0){
+			cout<<"--Comando apagar no aceptado, no existe la variable "<<Temporal[contador]<< " en memoria"<<endl;
+		}
+		contador++;
 	}else{
 		cout<<"--Error de sintaxis en la instruccion si, no se reconocio como valido"<<endl;
 		contador++;
@@ -660,20 +683,7 @@ bool numero(string num){
 	else
 		return false;
 }
-bool palabra(string p){
-	int w =0;
-	while(w<p.size()){
-	//||p[w]>= '0' && p[w] <= '9'
-	if(p[w]>='a' && p[w] <= 'z'){
-			return true;
-		
-			}else{
-				return false;
-			}
-		    w++;
-			
-	}
-}
+
 bool cadenas(string p){
 	int w =0;
 	while(w<p.size()){
@@ -688,10 +698,9 @@ bool cadenas(string p){
 			
 	}
 }
-/*
+
 //funcion para reconocer si es una palabra o cadena lo ingresado
 bool palabra(string cadena){
-	cout<<cadena<<endl;
 	enum TEstado{q0,q1,qe};
 	
 	TEstado Estado;
@@ -733,4 +742,3 @@ bool palabra(string cadena){
 		return false;
 	}
 }
-*/
