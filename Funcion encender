@@ -1,0 +1,45 @@
+#include <iostream>
+#include <stdlib.h>
+#include <string.h>
+#include <fstream>
+
+using namespace std;
+
+//Declaramos las variables de tipo string a utilizar
+string TablaSimbolos[21] = {"mientras","si","sino","para","definir","encender","Apagar"};
+string Temporal[200];
+
+//Declaramos las variables de tipo entero a utilizar
+int contador;
+
+bool encender();
+
+int main(){
+	
+	
+}
+
+bool encender(){
+	contador++;
+	if (cadenas(Temporal[contador])){
+		contador++;
+		if (numero(Temporal[contador])){
+			cout<<"--Instruccion encender aceptada, encendiendo durante "<<Temporal[contador]<<" sg"<<endl;
+			contador++;
+			if (Temporal[contador] == "si" || Temporal[contador] == "sino" || Temporal[contador] == "mientras" || Temporal[contador] == "definir" || Temporal[contador] == "encender" || Temporal[contador] == "apagar"){
+				EncontrarComandos();
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			cout<<"--Error de sintaxis en la instruccion si, no se reconocio como valido"<<endl;
+			contador++;
+			return false;
+		}
+	}else{
+		cout<<"--Error de sintaxis en la instruccion si, no se reconocio como valido"<<endl;
+		contador++;
+		return false;
+	}
+}
