@@ -1,0 +1,33 @@
+#include <iostream>
+#include <stdlib.h>
+#include <string.h>
+#include <fstream>
+
+using namespace std;
+
+//Declaramos las variables de tipo string a utilizar
+string TablaSimbolos[21] = {"mientras","si","sino","para","definir","encender","Apagar"};
+string Temporal[200];
+
+//Declaramos las variables de tipo entero a utilizar
+int contador;
+
+bool si();
+bool palabra(string p);
+bool sino();
+
+int main(){	
+	
+}
+
+bool apagar(){
+	contador++;
+	if (cadenas(Temporal[contador])){
+		cout<<"Comando apagar aceptado, apagando "<<Temporal[contador]<<endl;
+		contador++;		
+	}else{
+		cout<<"--Error de sintaxis en la instruccion si, no se reconocio como valido"<<endl;
+		contador++;
+		return false;
+	}
+}
