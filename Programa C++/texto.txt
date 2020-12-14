@@ -1,0 +1,26 @@
+si ( n == m ) { 
+  definir n1;
+} sino { 
+};
+
+si ( n < 8 ) { 
+
+};
+
+definir n;
+
+si ( 23 != n ) { 
+} sino { 
+};
+
+mientras ( 1 < n ) { };
+
+definir led1;
+
+si ( n < 2 ) { };
+
+encender led1, 1;
+
+apagar led1;
+
+
