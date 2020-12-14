@@ -1,23 +1,27 @@
-
 #include<iostream>
 #include<stdlib.h>
 #include<string.h>
 #include<fstream>
+
 using namespace std;
 
-void leerArchivo();
+void leerArchivo(char *fp);
 
-int main(){
-
-     leerArchivo();
+int main(int argc, char* argv[]){
+	         //estraemos el nombre del archivo desde la consola, nombre indicado por el usuario
+     char *fp = argv[1]; 
+      
+      leerArchivo(fp);
+      
      
 }
 
-void leerArchivo(){
+void leerArchivo(char *fp){
 	ifstream archivo;
 	string nombreArchivo,texto;
 
-	archivo.open("texto.txt",ios::in); 
+	//comienza la lectura del archivo
+	archivo.open(fp,ios::in); 
 	
 	if(archivo.fail()){
 		cout<<"No se pudo abrir el archivo";
