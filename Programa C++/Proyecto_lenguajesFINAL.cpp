@@ -377,7 +377,7 @@ bool mientras(){
 				//revisamos que lo siguiente sea un numero
 				if (numero(Temporal[contador])){
 					contador++;
-					//Ahora revisamos si el siguiente caracter sea un parentesis, para cerrar el si
+					//Ahora revisamos si el siguiente caracter sea un parentesis, para cerrar el mientras
 					if (Temporal[contador]==")"){
 						contador++;
 						//confirmamos que se abran los corchetes de la instruccion si
